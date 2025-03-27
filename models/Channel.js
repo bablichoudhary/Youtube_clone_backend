@@ -15,6 +15,12 @@ const ChannelSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+// Middleware to delete videos when a channel is deleted
+ChannelSchema.pre("findOneAndDelete", async function (next) {
+  const channelId = this.getQuery()["_id"];
+  await Video.deleteMany({ channelId });
+  next();
+});
 
-// ✅ Explicitly define collection name as "channels"
+//  Explicitly define collection name as "channels"
 export default mongoose.model("Channel", ChannelSchema, "channels");

@@ -49,7 +49,7 @@ export const getChannelByUser = async (req, res) => {
     }).populate("videos");
 
     if (!channel) {
-      return res.status(200).json(null); // ✅ Return `null` instead of `404`
+      return res.status(200).json(null); // Return `null` instead of `404`
     }
 
     res.json(channel);
@@ -108,5 +108,30 @@ export const subscribeChannel = async (req, res) => {
     res
       .status(500)
       .json({ message: "Failed to subscribe/unsubscribe to channel" });
+  }
+};
+
+// Controller for Disliking a video
+export const dislikeVideo = async (req, res) => {
+  try {
+    // Find the video by ID
+    const video = await Video.findById(req.params.id);
+    
+    // If the video doesn't exist, return a 404 error
+    if (!video) {
+      return res.status(404).json({ message: "Video not found!" });
+    }
+
+    // Increment the dislike count
+    video.dislikes += 1;
+
+    // Save the updated video
+    await video.save();
+
+    // Return the updated dislike count in the response
+    res.status(200).json({ message: "Disliked successfully", dislikes: video.dislikes });
+  } catch (error) {
+    // Catch any errors and return a 500 server error
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };

@@ -33,7 +33,7 @@ const VideoSchema = new mongoose.Schema(
         "Food",
       ],
       required: true,
-    }, // New category field
+    }, 
   },
   { timestamps: true }
 );

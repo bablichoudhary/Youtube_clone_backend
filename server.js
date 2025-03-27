@@ -25,9 +25,7 @@ app.use(
 app.use(express.json());
 
 // Routes
-app.get("/", (req, res) => {
-  res.send("root Route");
-});
+
 app.use("/api/users", userRoutes);
 app.use("/api/videos", videoRoutes);
 app.use("/api/channels", channelRoutes);
