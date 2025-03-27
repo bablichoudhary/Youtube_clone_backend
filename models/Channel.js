@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Video from "./Video.js"; // Adjust the path if needed
 
 const ChannelSchema = new mongoose.Schema(
   {
